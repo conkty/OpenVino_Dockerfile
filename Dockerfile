@@ -60,3 +60,5 @@ RUN   cd $TEMP_DIR \
     && echo "source $INSTALL_DIR/bin/setupvars.sh" > /root/.bashrc \
     # make directory for mounting user manual directory for usage.
     && mkdir -p $WORKSPACE
+
+WORKDIR $WORKSPACE
