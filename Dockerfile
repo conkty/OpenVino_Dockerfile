@@ -14,7 +14,7 @@ ARG WORKSPACE=/root/deploy
 # make temporary directory to load install files, will be removed after.
 RUN mkdir -p $TEMP_DIR \
     # change apt source list to china mirror
-    && sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.163.com\/ubuntu\//g' /etc/apt/sources.list \
+    && sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list \
     # update the apt source cache and install some tools, according to the need.
     && apt-get update && apt-get install -y --no-install-recommends \
     wget \
