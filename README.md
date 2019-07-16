@@ -19,8 +19,10 @@ mkdir sdks
 # firstly, download openvino and opencl install files into sdks/
 
 # then build, the tag named as you wish
-docker build -t weik/intelvino:v01
+docker build -t weik/intelvino:v01 .
 ```
+DON'T FORGET THE DOT AT THE TAIL.
+
 ### Create container and run
 
 ```
