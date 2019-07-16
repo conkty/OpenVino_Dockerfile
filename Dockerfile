@@ -13,7 +13,7 @@ ARG TEMP_DIR=/tmp/openvino_installer/
 # make temporary directory to load install files, will be removed after.
 RUN mkdir -p $TEMP_DIR \
     # backup origin source to list.d
-    && cp /etc/apt/sources.list /etc/apt/sources.list.d \
+    # && cp /etc/apt/sources.list /etc/apt/sources.list.d \
     # change apt source list to china mirror
     && sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list \
     && apt-get update \
@@ -46,11 +46,11 @@ RUN   cd $TEMP_DIR \
     && sed -i 's/decline/accept/g' silent.cfg  \
     && ./install.sh -s silent.cfg  \
     && $INSTALL_DIR/install_dependencies/install_openvino_dependencies.sh \
-    # update the library cache
-    && ldconfig \
     # remove apt cache files
     && rm -rf /var/lib/apt/lists/* \
     # remove all upload temporary install files
     && rm -rf $TEMP_DIR  \
+    # update the library cache
+    && ldconfig \
     # add the openvino setupvars.sh to root's bashrc
     && echo "source $INSTALL_DIR/bin/setupvars.sh" > /root/.bashrc
