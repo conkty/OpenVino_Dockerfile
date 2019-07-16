@@ -13,6 +13,8 @@ ARG WORKSPACE=/root/deploy
 
 # make temporary directory to load install files, will be removed after.
 RUN mkdir -p $TEMP_DIR \
+    # backup origin source to list.d
+    && cp /etc/apt/sources.list /etc/apt/sources.list.d \
     # change apt source list to china mirror
     && sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list \
     # update the apt source cache and install some tools, according to the need.
@@ -24,6 +26,7 @@ RUN mkdir -p $TEMP_DIR \
     cpio \
     sudo \
     apt-utils \
+    net-tools \
     gdb \
     file \
     tree \
