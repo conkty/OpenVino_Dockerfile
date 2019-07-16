@@ -9,26 +9,33 @@ weik 'conkty@126.com'
 * Intel MYRIAD
 
 ## How to Use
-### Build the Docker Image
+### Prepare files
+* get the docker file
 ```
 git clone https://github.com/conkty/OpenVino_Dockerfile.git
-cd OpenVino_Dockerfile
-
-mkdir sdks
-
-# firstly, download openvino and opencl install files into sdks/
-
-# then build, the tag named as you wish
-docker build -t weik/intelvino:v01 .
 ```
-DON'T FORGET THE DOT AT THE TAIL.
+
+* download openvino and opencl install files, from intel.com and https://github.com/intel/compute-runtime/releases, and then moved into `sdks/` in `OpenVino_Dockerfile` directory.
+  
+```
+cd OpenVino_Dockerfile
+mkdir sdks
+```
+
+### Build Image
+    ```
+    # build image, the tag named as you wish
+    docker build -t weik/intelvino:v01 .
+    ```
+DO NOT FORGET THE DOT AT THE TAIL.
 
 The built image is about _1.79GB_ .
 
-### Create container and run
+### Create container
+the parameters `--name`, the second `-v `,  can be changed as you need.
 
 ```
-# wait, and then create container
+# create container
 docker create -e DISPLAY=$DISPLAY \                     # can run GUI program
             --device=/dev/dri/card0:/dev/dri/card0 \
             --device=/dev/dri/renderD128:/dev/dri/renderD128 \
@@ -36,17 +43,18 @@ docker create -e DISPLAY=$DISPLAY \                     # can run GUI program
             -v /dev:/dev \
             -it \
             --net=host  \   
-            --name wkvino \                                                 # the container name, used after
-            -v /home/weik/progams:/root/deploy \               # map host directory to the container, espacially where the executable file are in
-           weik/intelvino:v01                                               # the image tag given above
-# then start and attach
+            --name wkvino \                                                # the container name, used after
+            -v /home/weik/progams:/root/deploy \             # map host directory to the container, espacially where the executable file are in
+           weik/intelvino:v01                                            # the image tag given above
+```
 
+### Start and Attach
+```
 docker container start wkvino
 docker attach wkvino
-
-
 ```
-then in the running container, into the mounted path: `/root/deploy`, your files will be there, enjoy!
+
+ In the running container,  the mounted path: `/root/deploy`, your files will be there, enjoy!
 
 You can change the process according to need.
 
