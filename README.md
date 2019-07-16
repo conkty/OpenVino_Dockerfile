@@ -23,6 +23,8 @@ docker build -t weik/intelvino:v01 .
 ```
 DON'T FORGET THE DOT AT THE TAIL.
 
+The built image is about _1.79GB_ .
+
 ### Create container and run
 
 ```
