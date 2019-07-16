@@ -9,7 +9,6 @@ ARG INSTALL_DIR=/opt/intel/openvino
 # temporary directory to load install files, will be removed after
 ARG TEMP_DIR=/tmp/openvino_installer/
 # where the user execute files mounted when container start
-ARG WORKSPACE=/root/deploy
 
 # make temporary directory to load install files, will be removed after.
 RUN mkdir -p $TEMP_DIR \
@@ -17,22 +16,16 @@ RUN mkdir -p $TEMP_DIR \
     && cp /etc/apt/sources.list /etc/apt/sources.list.d \
     # change apt source list to china mirror
     && sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+    apt-utils \
     # update the apt source cache and install some tools, according to the need.
-    && apt-get update && apt-get install -y --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
     wget \
-    vim \
     pciutils \
     usbutils \
     cpio \
     sudo \
-    apt-utils \
-    net-tools \
-    gdb \
-    file \
-    tree \
-    locate \
-    openssh-server \
-    supervisor \
     lsb-release 
 
 #  copy OpenVino Components in 'sdks/' to the temporary intall directory,
@@ -60,8 +53,4 @@ RUN   cd $TEMP_DIR \
     # remove all upload temporary install files
     && rm -rf $TEMP_DIR  \
     # add the openvino setupvars.sh to root's bashrc
-    && echo "source $INSTALL_DIR/bin/setupvars.sh" > /root/.bashrc \
-    # make directory for mounting user manual directory for usage.
-    && mkdir -p $WORKSPACE
-
-WORKDIR $WORKSPACE
+    && echo "source $INSTALL_DIR/bin/setupvars.sh" > /root/.bashrc
